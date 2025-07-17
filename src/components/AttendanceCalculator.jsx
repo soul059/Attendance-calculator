@@ -48,7 +48,8 @@ const AttendanceCalculator = () => {
     <div className="max-w-6xl mx-auto">
       {/* Progress Steps */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        {/* Desktop Progress Steps */}
+        <div className="hidden md:flex items-center justify-between">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isActive = currentStep === step.number;
@@ -78,6 +79,62 @@ const AttendanceCalculator = () => {
               </div>
             );
           })}
+        </div>
+
+        {/* Mobile Progress Steps */}
+        <div className="md:hidden">
+          {/* Current Step Indicator */}
+          <div className="text-center mb-4">
+            <div className="text-sm text-gray-500 mb-1">
+              Step {currentStep} of {steps.length}
+            </div>
+            <div className="font-medium text-gray-800">
+              {steps[currentStep - 1].title}
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="relative">
+            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+              <div 
+                style={{ width: `${(currentStep / steps.length) * 100}%` }}
+                className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500 transition-all duration-300"
+              ></div>
+            </div>
+          </div>
+
+          {/* Mobile Steps List */}
+          <div className="space-y-2">
+            {steps.map((step, index) => {
+              const Icon = step.icon;
+              const isActive = currentStep === step.number;
+              const isCompleted = currentStep > step.number;
+              
+              return (
+                <div key={step.number} className={`flex items-center p-2 rounded-lg ${
+                  isActive ? 'bg-blue-50 border border-blue-200' : ''
+                }`}>
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 ${
+                    isCompleted 
+                      ? 'bg-green-500 border-green-500 text-white' 
+                      : isActive 
+                        ? 'bg-blue-500 border-blue-500 text-white' 
+                        : 'bg-white border-gray-300 text-gray-400'
+                  }`}>
+                    <Icon size={14} />
+                  </div>
+                  <span className={`ml-3 text-sm font-medium ${
+                    isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-400'
+                  }`}>
+                    {step.title}
+                  </span>
+                  {isCompleted && (
+                    <span className="ml-auto text-green-500 text-xs">✓</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
