@@ -8,7 +8,15 @@ export default defineConfig({
   optimizeDeps: {
     include: ['pdfjs-dist']
   },
-  worker: {
-    format: 'es'
+  build: {
+    rollupOptions: {
+      external: [],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          pdf: ['pdfjs-dist']
+        }
+      }
+    }
   }
 })

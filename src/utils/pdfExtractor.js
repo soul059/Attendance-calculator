@@ -2,8 +2,10 @@ import * as pdfjsLib from 'pdfjs-dist';
 import { extractTextSimple } from './simplePdfExtractor';
 
 // Set up the worker to avoid CORS issues
-// Use local worker file
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/js/pdf.worker.min.js';
+// Use CDN worker for production compatibility
+if (typeof window !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+}
 
 export const extractTextFromPDF = async (file) => {
   try {

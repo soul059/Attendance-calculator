@@ -87,7 +87,7 @@ const TimetableUpload = ({ onSubjectsExtracted, onNext }) => {
       
       // Use the specific error message from the PDF extractor
       const errorMessage = err.message || 'Error processing PDF file';
-      setError(`${errorMessage} Using sample subjects as fallback.`);
+      setError(`${errorMessage} Using sample subjects as fallback - you can edit them in the next step.`);
       
       // Fall back to sample subjects
       setExtractedSubjects(sampleSubjects);
